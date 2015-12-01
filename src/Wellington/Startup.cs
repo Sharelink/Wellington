@@ -5,7 +5,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TorontoWebsite
+namespace Wellington
 {
     public class Startup
     {
@@ -30,7 +30,10 @@ namespace TorontoWebsite
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                config.Filters.Add(new LogExceptionFilter());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
