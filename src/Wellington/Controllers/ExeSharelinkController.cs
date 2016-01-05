@@ -24,17 +24,14 @@ namespace Wellington.Controllers
             else if (ua.Contains("android"))
             {
                 NLog.LogManager.GetLogger("Request").Info("AndroidExeSharelink");
-                return Redirect("~/AndroidExeSharelink.html?cmd=" + cmd);
+                //return Redirect("~/AndroidExeSharelink.html?cmd=" + cmd);
             }
             else if(ua.Contains("windows mobile") || ua.Contains("windows phone"))
             {
                 NLog.LogManager.GetLogger("Request").Info("WMExeSharelink");
-                return Redirect("~/WMExeSharelink.html?cmd=" + cmd);
+                //return Redirect("~/WMExeSharelink.html?cmd=" + cmd);
             }
-            else
-            {
-                return Redirect("~/");
-            }
+            return Redirect("~/");
         }
     }
 }
