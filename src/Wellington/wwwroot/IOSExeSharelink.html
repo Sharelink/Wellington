@@ -10,24 +10,32 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/user-agent.js"></script>
     <script src="js/supersized.3.2.7.min.js"></script>
     <script src="js/supersized-init.js"></script>
 </head>
 <body text-align="center" style="background-color:white">
 
     <div class="login-container">
-        <button id="openApp" style="font-size:larger" onclick="javascript: redirectAppStore();">Sharelink In App Store</button>
+        <a id="openApp" onclick="javascript: redirectAppStore();">
+            <img src="images/Download_on_the_App_Store_Badge_CN_135x40.svg" />
+        </a>
         <p class="connect p" style="color:crimson">微信和QQ用户请通过右上角按钮使用Safari打开~</p>
     </div>
 
     <script type="text/javascript">
         var appStoreUrl = 'https://itunes.apple.com/app/id1059287119';
-        var slUrl = 'sharelink://' + getUrlParam('cmd');
-        location.href = slUrl;
-        setTimeout(function () {
-           location = appStoreUrl;
-        }, 700);
 
+        function redirectAppStore() {
+            location.href = appStoreUrl;
+        }
+        var slUrl = 'sharelink://' + getUrlParam('cmd');
+        if (is_weixn() == false) {
+            location.href = slUrl;
+            setTimeout(function () {
+                location = appStoreUrl;
+            }, 700);
+        }
     </script>
 </body>
 </html>
