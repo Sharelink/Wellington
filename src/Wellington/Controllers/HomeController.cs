@@ -14,7 +14,8 @@ namespace Wellington.Controllers
         public IActionResult Index()
         {
             NLog.LogManager.GetLogger("Request").Info("Home");
-            return View();
+            return Redirect("~/vege.html");
+            //return View();
         }
     }
 }
