@@ -1,27 +1,46 @@
-﻿using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using NLog;
-using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace Wellington
 {
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var configuration = new ConfigurationBuilder()
+            .AddCommandLine(args)
+            .Build();
+
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseConfiguration(configuration)
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseStartup<Startup>()
+                .Build();
+
+            host.Run();
+        }
+    }
+
     public class Startup
     {
+
         public static IConfiguration Configuration { get; set; }
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        public Startup(IHostingEnvironment env)
         {
             // Setup configuration sources.
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(appEnv.ApplicationBasePath);
+            var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath);
             if (env.IsDevelopment())
             {
-                builder.AddJsonFile("config.json");
+                builder.AddJsonFile("config.json",true,true);
             }
             else
             {
-                builder.AddJsonFile("/etc/bahamut/website.json");
+                builder.AddJsonFile("/etc/bahamut/website.json",true,true);
             }
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
